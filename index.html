@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index-pc.css" />
+    <link rel="stylesheet" href="index-mobile.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="toggle" class="null">
+        <img src="assets/toggle.png" />
+      </div>
+      <div id="feature" class="colapsed">
+        <div class="feature-container stroke">
+          <p id="heading">Stroke Size: <span id="strokeValue">5</span></p>
+          <input type="range" min="01" max="10" id="strokeRange" />
+        </div>
+        <div class="feature-container utilities">
+          <button id="pencil" class="selected">
+            <img src="assets/pencil.png" />
+          </button>
+          <button id="eraser"><img src="assets/eraser.png" /></button>
+          <button id="fillRect">
+            <img src="assets/fillRectangle.png" />
+          </button>
+          <button id="unfillRect">
+            <img src="assets/unfillRectangle.png" />
+          </button>
+          <button id="fillCircle"><img src="assets/fillCircle.png" /></button>
+          <button id="unfillCircle">
+            <img src="assets/unfillCircle.png" />
+          </button>
+        </div>
+        <div class="feature-container helpers">
+          <input type="color" id="colorPicker" />
+          <button id="clearBtn">Clear</button>
+        </div>
+      </div>
+      <div id="drawSpaceContainer">
+        <canvas id="space"></canvas>
+      </div>
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="index-mobile.js"></script>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+@media only screen and (min-width: 767px) {
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+  #toggle {
+    display: none;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    overflow: hidden;
+  }
+
+  #feature {
+    height: 100vh;
+    width: 100%;
+    background: black;
+    color: floralwhite;
+  }
+
+  .stroke {
+    display: grid;
+    grid-template-rows: auto auto;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .stroke p {
+    text-align: center;
+  }
+  .stroke input[type="range"] {
+    -webkit-appearance: slider-vertical;
+    margin: 10px 0px 0px 0px;
+  }
+
+  .utilities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+    padding: 10px;
+  }
+  .utilities button {
+    border: 1px solid white;
+    border-radius: 10px;
+    outline: none;
+  }
+  .utilities .selected {
+    border: 1px solid lightblue;
+    background-color: lightblue;
+  }
+  .utilities button img {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    pointer-events: none;
+  }
+
+  .helpers {
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: 20px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+  .helpers * {
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+  }
+  .helpers input[type="color"] {
+    background-color: black;
+  }
+
+  #space {
+    border: 1px solid black;
+  }
+  #drawSpaceContainer {
+    position: relative;
+  }
+}
