@@ -6,6 +6,8 @@ let pickedFeature = "pencil";
 let x1 = 0;
 let y1 = 0;
 let globalXOffset = 0;
+//for Mobile this var is needed
+let mobileLastCoordinates = { x: 0, y: 0 };
 
 //-----Element Initializtion-----
 const strokeRange = document.querySelector("#strokeRange");
@@ -58,6 +60,7 @@ function init() {
         createCircle(e);
         break;
     }
+    e.preventDefault();
   }
   function finishedPosition(e) {
     if (painting === true) {
@@ -74,6 +77,7 @@ function init() {
           break;
       }
       ctx.stroke();
+      e.preventDefault();
     }
   }
   function draw(e) {
@@ -94,11 +98,15 @@ function init() {
           drawCircle(e);
           break;
       }
+      e.preventDefault();
     }
   }
   drawSpace.addEventListener("mousedown", startPosition);
   drawSpace.addEventListener("mouseup", finishedPosition);
   drawSpace.addEventListener("mousemove", draw);
+  drawSpace.addEventListener("touchstart", startPosition);
+  drawSpace.addEventListener("touchend", finishedPosition);
+  drawSpace.addEventListener("touchmove", draw);
 }
 
 function updateOffsets(e) {
@@ -136,10 +144,18 @@ function updateColor(e) {
 //creation of pencil stoke and erasor stroke.
 function drawStroke(e) {
   ctx.lineCap = "round";
-  ctx.lineTo(e.clientX - globalXOffset, e.clientY);
+  let x, y;
+  if (e.clientX === undefined && e.clientX === undefined) {
+    x = e.touches[0].clientX;
+    y = e.touches[0].clientY;
+  } else {
+    x = e.clientX;
+    y = e.clientY;
+  }
+  ctx.lineTo(x - globalXOffset, y);
   ctx.stroke();
   ctx.beginPath();
-  ctx.moveTo(e.clientX - globalXOffset, e.clientY);
+  ctx.moveTo(x - globalXOffset, y);
 }
 //end creation of pencil stoke and erasor stroke.
 
@@ -149,8 +165,15 @@ function createBox(e) {
   box.id = "template";
   box.style.border = "1px solid black";
   box.style.position = "absolute";
-  x1 = e.clientX - globalXOffset;
-  y1 = e.clientY;
+  if (e.clientX === undefined && e.clientX === undefined) {
+    x1 = e.touches[0].clientX;
+    y1 = e.touches[0].clientY;
+    mobileLastCoordinates.x = x1;
+    mobileLastCoordinates.y = y1;
+  } else {
+    x1 = e.clientX - globalXOffset;
+    y1 = e.clientY;
+  }
   box.style.top = y1 + "px";
   box.style.left = x1 + "px";
   const drawSpace = document.querySelector("#drawSpaceContainer");
@@ -159,8 +182,16 @@ function createBox(e) {
 
 function drawBox(e) {
   let box = document.querySelector("#template");
-  x2 = e.clientX - globalXOffset;
-  y2 = e.clientY;
+  var x2, y2;
+  if (e.clientX === undefined && e.clientY === undefined) {
+    x2 = e.touches[0].clientX;
+    y2 = e.touches[0].clientY;
+    mobileLastCoordinates.x = x2;
+    mobileLastCoordinates.y = y2;
+  } else {
+    x2 = e.clientX - globalXOffset;
+    y2 = e.clientY;
+  }
   box.style.top = Math.min(y1, y2) + "px";
   box.style.left = Math.min(x1, x2) + "px";
   box.style.height = Math.abs(y2 - y1) + "px";
@@ -168,8 +199,14 @@ function drawBox(e) {
 }
 
 function removeBox(e) {
-  x2 = e.clientX - globalXOffset;
-  y2 = e.clientY;
+  var x2, y2;
+  if (e.clientX === undefined && e.clientY === undefined) {
+    x2 = mobileLastCoordinates.x;
+    y2 = mobileLastCoordinates.y;
+  } else {
+    x2 = e.clientX - globalXOffset;
+    y2 = e.clientY;
+  }
   if (pickedFeature === "fillRect") {
     ctx.fillRect(
       Math.min(x1, x2),
@@ -202,8 +239,14 @@ function drawCircle(e) {
 }
 function removeCircle(e) {
   const circle = document.querySelector("#template");
-  x2 = e.clientX - globalXOffset;
-  y2 = e.clientY;
+  let x2, y2;
+  if (e.clientX === undefined && e.clientY === undefined) {
+    x2 = mobileLastCoordinates.x;
+    y2 = mobileLastCoordinates.y;
+  } else {
+    x2 = e.clientX - globalXOffset;
+    y2 = e.clientY;
+  }
   [x1, y1, x2, y2] = getDiagonalCorners(x1, y1, x2, y2);
 
   //length of the sides
